@@ -219,7 +219,7 @@ Dirender oleh shell script openNDS, menampilkan:
 
 ## Struktur Direktori
 
-``
+```
 Opennds-auth-AI-challenge/
 |
 +-- app.py          # Flask app utama (port 5000)
@@ -238,7 +238,7 @@ Opennds-auth-AI-challenge/
 |
 +-- README.md              # Dokumentasi ini
 ```
-
+```
 ---
 
 ## Prasyarat dan Instalasi
