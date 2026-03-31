@@ -6,7 +6,7 @@
 dibangun di atas **openNDS FAS**, **Flask**, dan **Groq API**
 berjalan di router **GL-B1300 (OpenWrt)**
 
-[![Preview Demo](https://img.shields.io/badge/🦗_Live_Demo-Preview_Interaktif-d97757?style=for-the-badge)](https://Kendo-id.github.io/Opennds-auth-AI-challenge/preview.html)
+[![Preview Demo](https://img.shields.io/badge/Live_Demo-Preview_Interaktif-d97757?style=for-the-badge)](https://Kendo-id.github.io/Opennds-auth-AI-challenge/preview.html)
 [![OpenWrt](https://img.shields.io/badge/OpenWrt-GL--B1300-00b4d8?style=flat-square&logo=openwrt)](https://openwrt.org/)
 [![Flask](https://img.shields.io/badge/Flask-2.x-black?style=flat-square&logo=flask)](https://flask.palletsprojects.com/)
 [![Python](https://img.shields.io/badge/Python-3.11-blue?style=flat-square&logo=python)](https://python.org/)
@@ -95,7 +95,6 @@ Portal ini terintegrasi penuh dengan daemon **openNDS** (open Network Demarcatio
 | **openNDS** | Daemon captive portal, mengintersep HTTP client baru |
 | **FAS (Forward Auth Service)** | Mekanisme redirect ke Flask untuk autentikasi |
 | **portal_app.py** | Flask app utama — quiz, chat AI, autentikasi |
-| **smarthome_app.py** | Flask app smart home — kontrol relay Tasmota |
 | **groq_lite.py** | Wrapper HTTP Groq API (pengganti SDK yang tidak kompatibel ARM) |
 | **client_params.sh** | Shell script openNDS — generate halaman status client |
 | **nginx** | Reverse proxy HTTPS, terminator SSL |
@@ -184,7 +183,7 @@ openNDS                portal_app.py (Flask)
 
 ### UI dan Animasi
 
-- **Dark mode** dengan palet warna Claude.ai (warm almost-black `#1c1917`)
+- **Dark mode** dengan palet warna oleh Anthropic (warm almost-black `#1c1917`)
 - **Maskot Jangkrik SVG animatif** — antena bergoyang, kaki bergerak, tangan memegang kopi dengan uap mengepul
 - **Topbar blur** — efek glassmorphism dengan `backdrop-filter`
 - **Kartu info client** — IP, MAC, gateway, waktu real-time
@@ -203,14 +202,6 @@ Dirender oleh shell script openNDS, menampilkan:
 - Detail lanjutan (tipe client, interface, gateway address, versi openNDS)
 - Tombol Refresh dan Logout
 
-### Smart Home (smarthome_app.py)
-
-- Kontrol **8 relay** via Tasmota ESP8266
-- **2-stage AI parser**: intent parsing ketat + konfirmasi humoris via Qwen3
-- **Strip `<think>`** — fix untuk Qwen3 chain-of-thought yang bocor ke output
-- **10 tema UI** berbeda yang dapat dipilih
-- Strategi koneksi Tasmota dual (`Status 0` + direct command)
-
 ### Keamanan dan Sesi
 
 - Autentikasi token HMAC-SHA256 (native openNDS FAS)
@@ -220,34 +211,30 @@ Dirender oleh shell script openNDS, menampilkan:
 
 ### Kompatibilitas Hardware
 
-- Berjalan di **GL-B1300 (ARM Cortex-A9, 512MB RAM)**
+- Berjalan di **GL-B1300 (ARM Cortex-A7, 256MB RAM)**
 - **groq_lite.py** — implementasi HTTP langsung sebagai pengganti Groq SDK Python yang tidak kompatibel ARM
-- Tidak memerlukan systemd — manajemen proses via shell script dengan PID file (`/usr/local/bin/chatbot`)
-- Source file **pure ASCII** — kompatibel ArduinoDroid dan toolchain ARM
-
+- Tidak memerlukan systemd — manajemen proses via shell script dengan PID file (`/usr/local/bin/portal`)
+  
 ---
 
 ## Struktur Direktori
 
-```
+``
 Opennds-auth-AI-challenge/
 |
-+-- portal_app.py          # Flask app utama (port 5001)
-+-- smarthome_app.py       # Flask app smart home (port 5002)
++-- app.py          # Flask app utama (port 5000)
 +-- groq_lite.py           # Wrapper HTTP Groq API (ARM workaround)
-+-- config.py              # Konfigurasi global (API key, REQUIRED, dll)
++-- .env              # Konfigurasi global (API key, REQUIRED, dll)
+|+-- templates/
+|   +-- portal.html     # UI Portal openNDS
 |
 +-- portal.html            # Halaman portal kuis + chat Kendo
-+-- splash.css             # CSS untuk halaman status client (openNDS)
-+-- client_params.sh       # Shell script openNDS status page
++-- /etc/opennds/htdoc/
+|   +-- splash.css             # CSS untuk halaman status client (openNDS)
++-- /usr/lib/opennds/
+|   +-- client_params.sh       # Shell script openNDS status page
 |
 +-- preview.html           # Preview interaktif untuk GitHub README
-|
-+-- templates/
-|   +-- smarthome.html     # UI smart home
-|
-+-- static/
-|   +-- ...                # Asset statis
 |
 +-- README.md              # Dokumentasi ini
 ```
