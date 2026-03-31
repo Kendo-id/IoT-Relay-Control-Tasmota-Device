@@ -221,18 +221,18 @@ Dirender oleh shell script openNDS, menampilkan:
 
 ```
 Opennds-auth-AI-challenge/
-|
-+-- app.py          # Flask app utama (port 5000)
-+-- groq_lite.py           # Wrapper HTTP Groq API (ARM workaround)
-+-- .env              # Konfigurasi global (API key, REQUIRED, dll)
-|+-- templates/
-|   +-- portal.html     # UI Portal openNDS
-|
-+-- portal.html            # Halaman portal kuis + chat Kendo
-+-- /etc/opennds/htdoc/
-|   +-- splash.css             # CSS untuk halaman status client (openNDS)
-+-- /usr/lib/opennds/
-|   +-- client_params.sh       # Shell script openNDS status page
+|/Flask-Backend
+     +-- app.py          # Flask app utama (port 5000)
+     +-- groq_lite.py           # Wrapper HTTP Groq API (ARM workaround)
+     +-- .env              # Konfigurasi global (API key, REQUIRED, dll)
+     |+-- templates/
+         +-- portal.html     # UI Portal openNDS
+
+|/OpenWrt
+ +-- /etc/opennds/htdoc/
+     +-- splash.css             # CSS untuk halaman status client (openNDS)
+ +-- /usr/lib/opennds/
+     +-- client_params.sh       # Shell script openNDS status page
 |
 +-- preview.html           # Preview interaktif untuk GitHub README
 |
